@@ -1,0 +1,38 @@
+<?php
+
+function simple_gmap_block_info() {
+  $blocks['simple_gmap'] = array(
+    'info' => t('Google Map'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  );
+  return $blocks;
+}
+
+function simple_gmap_block_view($delta = '') {
+  //$some_settings =''; 
+  $block = array();
+  switch ($delta) {
+    case 'simple_gmap':
+      $block['content'] = array(
+        '#markup' => simple_gmap_content(),
+        '#attached' => array(
+          'js' => array(
+            array(
+              'data' => 'https://maps.googleapis.com/maps/api/js',
+              'type' => 'external',
+            ),
+            // array(
+            //'data' => $some_settings,
+            // 'type' => 'setting'), 
+            drupal_get_path('module', 'simple_gmap') . '/js/simple_gmap.js',
+          ),
+        ),
+      );
+      break;
+  }
+  return $block;
+}
+
+function simple_gmap_content() {
+  return '<div id="map" style="width:100%; height: 400px;"></div>';
+}
